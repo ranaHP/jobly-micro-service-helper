@@ -27,7 +27,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'  # Added registry URL
 
       - name: Install dependencies
-        run: npm ci  # Changed from 'npm install' to 'npm ci' for more reliable installs
+        run: npm i  # Changed from 'npm install' to 'npm ci' for more reliable installs
 
       - name: Build the project
         run: npm run build
