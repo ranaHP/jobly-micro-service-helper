@@ -29,13 +29,19 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@ranaHP'
+
       - name: Configure npm registry
         run: |
           echo "@ranaHP:https://npm.pkg.github.com/" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" >> .npmrc
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish
         working-directory: ./build
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
