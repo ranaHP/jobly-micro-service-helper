@@ -22,15 +22,16 @@ jobs:
         uses: actions/setup-node@v4  # Updated from v3 to v4
         with:
           node-version: '22.x'
-          registry-url: 'https://registry.npmjs.org'  # Added registry URL
+          registry-url: 'https://npm.pkg.github.com'  # Added registry URL
+          scope: '@ranahp'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build the project
         run: npm run build
 
-      - name: Set up .npmrc
+      - name: Authenticate with GitHub Package Registry
         run: echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
