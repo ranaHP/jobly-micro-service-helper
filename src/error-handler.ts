@@ -63,7 +63,7 @@ export class NotAuthorizedError extends CustomError {
     }
 }
 
-export class FileTooLargError extends CustomError {
+export class FileTooLargeError extends CustomError {
     statusCodes = StatusCodes.REQUEST_TOO_LONG;
     status = 'error';
 
