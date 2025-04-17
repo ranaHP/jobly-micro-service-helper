@@ -7,7 +7,7 @@ const esTransformer = (logDate: LogData): TransformedData => {
     return ElasticsearchTransformer(logDate);
 }
 
-export const wistonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
+export const winstonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
     const option = {
         console: {
             level: level,

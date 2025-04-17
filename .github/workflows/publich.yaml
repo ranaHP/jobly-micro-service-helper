@@ -1,0 +1,38 @@
+name: Publish
+on:
+  push
+    branches: [main]
+    pull_request:
+      branches:[main]
+  job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      package: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Run tests
+        run: |
+          echo @ranaHP:https://npm.pkg.github.com/ > build/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+
+      - name: Publish to npm
+        run: npm publish --access public
+        working-directory: build
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+
