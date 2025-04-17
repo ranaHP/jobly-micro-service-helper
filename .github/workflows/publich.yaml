@@ -27,7 +27,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'  # Added registry URL
 
       - name: Install dependencies
-        run: npm i  # Changed from 'npm install' to 'npm ci' for more reliable installs
+        run: npm install
 
       - name: Build the project
         run: npm run build
@@ -36,9 +36,9 @@ jobs:
         run: |
           echo "@ranaHP:https://npm.pkg.github.com/" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" >> .npmrc
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
 
       - name: Publish to npm
         run: npm publish --access public
+        working-directory: ./build
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
