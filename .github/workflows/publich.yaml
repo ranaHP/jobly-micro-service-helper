@@ -3,7 +3,7 @@ name: Publish to npm
 on:
   push:
     branches:
-      - main
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write  # Fixed typo: 'package' -> 'packages'
+      packages: write  
+      id-token: write
     
     steps:
       - name: Checkout code
@@ -29,19 +30,13 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@ranaHP'
-
       - name: Configure npm registry
         run: |
           echo "@ranaHP:https://npm.pkg.github.com/" > .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
 
       - name: Publish to npm
         run: npm publish
         working-directory: ./build
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
