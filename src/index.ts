@@ -1,9 +1,9 @@
 export {
     IAuthPayload,
-    IAuth,
     IAuthDocument,
     IAuthBuyerMessageDetails,
     IEmailMessageDetails,
+    IAuth,
     ISignUpPayload,
     ISignInPayload,
     IForgotPassword,
@@ -12,28 +12,84 @@ export {
     IReduxAddAuthUser,
     IReduxLogout,
     IAuthResponse,
-    IAuthUser
-} from './interfaces/auth.interface';
-export * from './interfaces/buyer.interface';
-export * from './interfaces/chat.interface';
-export * from './interfaces/gig.interface';
-export * from './interfaces/order.interface';
-export * from './interfaces/review.interface';
-export * from './interfaces/search.interface';
-export * from './interfaces/seller.interface';
+    IAuthUser,
+  } from './interfaces/auth.interface';
+  export {
+    IConversationDocument,
+    IMessageDocument,
+    IMessageDetails,
+    IChatBoxProps,
+    IChatSellerProps,
+    IChatBuyerProps,
+    IChatMessageProps,
+  } from './interfaces/chat.interface';
+  export {
+    GigType,
+    ICreateGig,
+    ISellerGig,
+    IGigContext,
+    IGigsProps,
+    IGigCardItems,
+    ISelectedBudget,
+    IGigViewReviewsProps,
+    IGigInfo,
+    IGigTopProps,
+  } from './interfaces/gig.interface';
+  export {
+    IOrderNotifcation,
+    IOffer,
+    IExtendedDelivery,
+    IDeliveredWork,
+    IOrderEvents,
+    IOrderReview,
+    IOrderMessage,
+    IOrderDocument,
+  } from './interfaces/order.interface';
+  export {
+    IReviewMessageDetails,
+    IRatingTypes,
+    IRatingCategories,
+    IRatingCategoryItem,
+    IReviewDocument,
+  } from './interfaces/review.interface';
+  export {
+    ISearchResult,
+    IHitsTotal,
+    IQueryList,
+    IQueryString,
+    ITerm,
+    IPaginateProps,
+  } from './interfaces/search.interface';
+  export {
+    SellerType,
+    ILanguage,
+    IExperience,
+    IEducation,
+    ICertificate,
+    ISellerDocument,
+  } from './interfaces/seller.interface';
+  export { IEmailLocals } from './interfaces/email.interface';
 
-export { imageUpload, videoUpload } from './couldinary-upload';
-export {
+
+  
+  export { imageUpload, videoUpload } from './couldinary-upload';
+  export {
+    IErrorResponse,
     IError,
     CustomError,
     BadRequestError,
     NotFoundError,
     NotAuthorizedError,
-    IErrorResponse,
-    FileTooLargError,
+    FileTooLargeError,
     ServerError,
     ErrnoException
-} from './error-handler';
-
-
-import { verifyGatewatRequest } from './gateway-middleware';
+  } from './error-handler';
+  export { verifyGatewayRequest } from './gateway-middleware';
+  export { winstonLogger } from './logger';
+  export {
+    firstLetterUppercase,
+    lowerCase,
+    toUpperCase,
+    isEmail,
+    isDataURL
+  } from './helpers';
