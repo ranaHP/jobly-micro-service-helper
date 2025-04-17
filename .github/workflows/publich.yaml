@@ -1,4 +1,5 @@
 name: Publish
+
 on:
   push:
     branches:
@@ -6,35 +7,38 @@ on:
   pull_request:
     branches:
       - main
-  job:
+  workflow_dispatch:
+
+jobs:
+  publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      package: write
+      packages: write  # Fixed typo: 'package' -> 'packages'
+    
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # Updated from v2 to v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4  # Updated from v3 to v4
         with:
           node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'  # Added registry URL
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Changed from 'npm install' to 'npm ci' for more reliable installs
 
       - name: Build the project
         run: npm run build
 
-      - name: Run tests
+      - name: Configure npm registry
         run: |
-          echo @ranaHP:https://npm.pkg.github.com/ > build/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+          echo "@ranaHP:https://npm.pkg.github.com/" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
 
       - name: Publish to npm
         run: npm publish --access public
-        working-directory: build
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-
