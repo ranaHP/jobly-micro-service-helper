@@ -1,9 +1,10 @@
 name: Publish
 on:
   push
-    branches: [main]
+    branches: 
+      - main
     pull_request:
-      branches:[main]
+      - main
   job:
     runs-on: ubuntu-latest
     permissions:
