@@ -7,29 +7,33 @@ const esTransformer = (logData: LogData): TransformedData => {
 
 export const winstonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
   const options = {
-        console: {
+    console: {
       level,
-            handleExceptions: true,
+      handleExceptions: true,
       json: false,
-            colorize: true
-        },
-        elasticsearch: {
+      colorize: true
+    },
+    elasticsearch: {
       level,
+      indexPrefix: 'jobly-logs',
       transformer: esTransformer,
-            clientOpts: {
-                node: elasticsearchNode,
-                log: level,
+      clientOpts: {
+        node: elasticsearchNode,
+        log: level,
         maxRetries: 2,
         requestTimeout: 10000,
-        sniffOnStart: false
+        sniffOnStart: false,
+        auth: {
+          apiKey: 'aFQ2T1U1WUIxTXltNC1BQUpUTmY6SjFPb2ZYcTlRVHFyZkFQSEVWVktpZw=='
+        },
       }
-        }
-    };
+    }
+  };
   const esTransport: ElasticsearchTransport = new ElasticsearchTransport(options.elasticsearch);
   const logger: Logger = winston.createLogger({
-        exitOnError: false,
-        defaultMeta: { service: name },
+    exitOnError: false,
+    defaultMeta: { service: name },
     transports: [new winston.transports.Console(options.console), esTransport]
-    });
-    return logger;
+  });
+  return logger;
 }
