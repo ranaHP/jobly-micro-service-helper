@@ -1,6 +1,6 @@
 {
   "name": "@ranahp/jobly-micro-service-helper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "description": "Helpers library for Jobly app",
@@ -16,7 +16,6 @@
     "trailingComma": "es5"
   },
   "keywords": [],
-  "name": "",
   "author": "",
   "repository": {
     "type": "git",
@@ -39,7 +38,6 @@
       "require": "./cjs/icons/index.js"
     }
   },
-  "types": "./src/index.d.ts",
   "dependencies": {
     "@babel/cli": "^7.27.0",
     "@babel/preset-env": "^7.26.9",
