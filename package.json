@@ -1,6 +1,6 @@
 {
   "name": "@ranahp/jobly-micro-service-helper",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "types": "./src/index.d.ts",
   "description": "Helpers library for Jobly app",

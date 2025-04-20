@@ -1,39 +1,35 @@
+import winston, { Logger } from 'winston';
+import { ElasticsearchTransformer, ElasticsearchTransport, LogData, TransformedData } from 'winston-elasticsearch';
 
-import wiston, { Logger } from 'winston';
-import { TransformedData, ElasticsearchTransformer, ElasticsearchTransport, LogData } from 'winston-elasticsearch';
-
-
-const esTransformer = (logDate: LogData): TransformedData => {
-    return ElasticsearchTransformer(logDate);
+const esTransformer = (logData: LogData): TransformedData => {
+  return ElasticsearchTransformer(logData);
 }
 
 export const winstonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
-    const option = {
+  const options = {
         console: {
-            level: level,
+      level,
             handleExceptions: true,
-            json: true,
+      json: false,
             colorize: true
         },
         elasticsearch: {
-            level: level,
+      level,
+      transformer: esTransformer,
             clientOpts: {
                 node: elasticsearchNode,
-                maxRetries: 5,
                 log: level,
-                requestTimeout: 60000,
-                SniffOptions: false
-            },
-            transformer: esTransformer
+        maxRetries: 2,
+        requestTimeout: 10000,
+        sniffOnStart: false
+      }
         }
     };
-
-    const esTransporter: ElasticsearchTransport = new ElasticsearchTransport(option.elasticsearch);
-    const logger:Logger = wiston.createLogger({
+  const esTransport: ElasticsearchTransport = new ElasticsearchTransport(options.elasticsearch);
+  const logger: Logger = winston.createLogger({
         exitOnError: false,
         defaultMeta: { service: name },
-        transports:[ new wiston.transports.Console(option.console), esTransporter],
+    transports: [new winston.transports.Console(options.console), esTransport]
     });
     return logger;
 }
-  
