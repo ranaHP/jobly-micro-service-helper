@@ -5,7 +5,7 @@ const esTransformer = (logData: LogData): TransformedData => {
   return ElasticsearchTransformer(logData);
 }
 
-export const winstonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
+export const winstonLogger = (elasticsearchNode: string, auth: any, name: string, level: string): Logger => {
   const options = {
     console: {
       level,
@@ -23,9 +23,7 @@ export const winstonLogger = (elasticsearchNode: string, name: string, level: st
         maxRetries: 2,
         requestTimeout: 10000,
         sniffOnStart: false,
-        auth: {
-          apiKey: 'aFQ2T1U1WUIxTXltNC1BQUpUTmY6SjFPb2ZYcTlRVHFyZkFQSEVWVktpZw=='
-        },
+        auth: auth,
       }
     }
   };
